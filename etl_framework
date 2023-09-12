@@ -1,0 +1,70 @@
+include required(file)
+
+pipeline-defaults{
+    standard = false
+}
+
+step-defaults {
+load-results = false
+}
+variables {
+}
+pipeline {
+description = "pipeline test"
+name = "Joss Pipeline:
+steps = [
+10-create-table
+20-create-table2
+30-create-table3
+]
+}
+steps{
+10-create-table = {
+  class-name = spark.pipeline.SparkLoaderStep,
+  inputs = {
+  df-create-table = {
+  sql-type = local, table = table1
+  sql = 
+"""
+  select dog  
+  from tableabc
+  where x = 10
+  ;
+"""
+}, metadata = {is-input = true, is-save = false}
+                }
+           }
+       }
+20-create-table2 = {
+  class-name = spark.pipeline.SparkLoaderStep,
+  inputs = {
+  df-create-table2 = {
+  sql-type = local, table = table2
+  sql = 
+"""
+  select cat  
+  from tablexyz
+  where x = 19
+  ;
+"""
+}, metadata = {is-input = true, is-save = false}
+                }
+           }
+       }
+30-create-table3 = {
+ class-name = spark.pipeline.SparkLoaderStep,
+  inputs = {
+  df-create-table3 = {
+  sql-type = local, table = table3
+  sql = 
+"""
+  select cow 
+  from tablefgh
+  where x = 15
+  ;
+"""
+}, metadata = {is-input = true, is-save = false}
+                }
+           }
+       }
+    }
